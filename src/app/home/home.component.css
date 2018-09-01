@@ -1,0 +1,16 @@
+.rexparent {
+  height: 80vh;
+}
+
+.rexparent .redx {
+  padding: 15px;
+  height: 100%;
+}
+
+.profileLabel{
+    text-align: center;
+    background-color: #BDC3C7;
+    color: white;
+    border: thin solid darkgray;
+    margin-bottom: 5px;
+}

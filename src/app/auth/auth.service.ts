@@ -7,12 +7,15 @@ export class AuthService {
     isAuthenticated() {
         const promise = new Promise(
             (resolve, reject) => {
-                setTimeout(() => {
-                    resolve(this.loggedIn);
-                }, 800);
+                resolve(this.loggedIn);
             }
         );
         return promise;
+    }
+
+
+    isAuthValid() {
+        return this.loggedIn;
     }
 
     login(data) {
@@ -35,8 +38,21 @@ export class AuthService {
     }
 
     logout() {
-        this.loggedIn = false;
-        this.username = '';
-        this.password = '';
+
+        const promise = new Promise(
+            (resolve, reject) => {
+                this.loggedIn = false;
+                this.username = '';
+                this.password = '';
+                setTimeout(() => {
+                    resolve({
+                        'db_status': this.loggedIn,
+                        'db_msg': 'Logout Success',
+                    });
+                }, 500);
+            }
+        );
+        return promise;
+
     }
 }

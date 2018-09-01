@@ -1,1 +1,20 @@
-<p>works </p>
+<div class="row rexparent">
+  <div class="col-xs-12 col-sm-6 col-md-6 redx">
+    <div class="col-xs-12 profileLabel">
+      <h4>ELEMENT PROFILES</h4>
+    </div>
+    <ag-grid-angular style="width: 100%;" 
+    class="ag-theme-balham" [enableSorting]="true" [enableFilter]="true"
+    id="myGrid"
+    [rowData]="elementData" [columnDefs]="columnDefs1" (gridReady)="onGridElReady($event)">
+    </ag-grid-angular>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-6 redx">
+    <div class="col-xs-12 profileLabel">
+      <h4>EMAIL PROFILES</h4>
+    </div>
+    <ag-grid-angular style="width: 100%;" class="ag-theme-balham" [enableSorting]="true" id="myGridEl"
+      [rowData]="profileData" [columnDefs]="columnDefs2" (gridReady)="onGridEmlReady($event)">
+    </ag-grid-angular>
+  </div>
+</div>

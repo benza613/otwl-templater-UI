@@ -13,6 +13,9 @@ import { AuthGuard } from './auth-guard.service';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { HomeComponent } from './home/home.component';
 import { CoreModule } from './core/core.module';
+
+import { AgGridModule } from 'ag-grid-angular';
+
 @NgModule({
   declarations: [
     SigninComponent,
@@ -27,6 +30,7 @@ import { CoreModule } from './core/core.module';
     AppRoutingModule,
     CoreModule,
     CommonModule,
+    AgGridModule.withComponents([])
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]

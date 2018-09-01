@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { Router } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
@@ -7,7 +8,9 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {
-  constructor(private authService: AuthService) {
+  result: boolean;
+
+  constructor(private router: Router, private authService: AuthService) {
   }
 
   onSaveData() {
@@ -19,10 +22,16 @@ export class HeaderComponent {
   }
 
   onLogout() {
-    this.authService.logout();
+    this.authService.logout().then((res) => {
+      this.router.navigate(['/']);
+    });
   }
 
   isAuthenticated() {
-    return this.authService.isAuthenticated();
+    this.result = this.authService.isAuthValid();
+    console.log(this.result);
+
+    return this.result;
+    // return true;
   }
 }
