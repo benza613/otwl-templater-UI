@@ -29,9 +29,6 @@ export class HeaderComponent {
 
   isAuthenticated() {
     this.result = this.authService.isAuthValid();
-    console.log(this.result);
-
     return this.result;
-    // return true;
   }
 }

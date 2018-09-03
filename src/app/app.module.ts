@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { SigninComponent } from './auth/signin/signin.component';
@@ -15,13 +16,17 @@ import { HomeComponent } from './home/home.component';
 import { CoreModule } from './core/core.module';
 
 import { AgGridModule } from 'ag-grid-angular';
+import { ChildEditElementComponent } from './util/child-edit-element.component';
+import { ElemProfileComponent } from './elem-profile/elem-profile.component';
 
 @NgModule({
   declarations: [
     SigninComponent,
     AppComponent,
     ErrorPageComponent,
-    HomeComponent
+    HomeComponent,
+    ChildEditElementComponent,
+    ElemProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -29,8 +34,9 @@ import { AgGridModule } from 'ag-grid-angular';
     HttpModule,
     AppRoutingModule,
     CoreModule,
+    HttpClientModule,
     CommonModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([ChildEditElementComponent])
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]

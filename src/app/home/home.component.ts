@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../shared/http.service';
+import { GridOptions } from 'ag-grid';
+import { ChildEditElementComponent } from '../util/child-edit-element.component';
+
 
 @Component({
   selector: 'app-home',
@@ -6,28 +10,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  private getRowNodeId;
   private gridElApi;
   private gridEmlApi;
+  elementData = [];
 
   columnDefs2 = [
     { headerName: 'Make', field: 'make' },
     { headerName: 'Model', field: 'model' },
     { headerName: 'Price', field: 'price' }
-  ];
-
-  columnDefs1 = [
-    { headerName: 'Element ID', field: 'elemid' },
-    { headerName: 'Element Name', field: 'elemname' },
-    { headerName: 'Element Type', field: 'elemtype' }
-  ];
-
-  elementData = [
-    { elemid: '1', elemname: 'EA', elemtype: 35000 },
-    { elemid: '2', elemname: 'eml-prof13', elemtype: 32000 },
-    { elemid: '4', elemname: 'EZ', elemtype: 32000 },
-    { elemid: '5', elemname: 'EAD', elemtype: 32000 },
-    { elemid: '3', elemname: 'EC', elemtype: 72000 }
   ];
 
   profileData = [
@@ -36,7 +27,29 @@ export class HomeComponent implements OnInit {
     { make: 'Porsche', model: 'Boxter', price: 72000 }
   ];
 
-  constructor() {
+  public gridOptions: GridOptions;
+
+  constructor(private httpService: HttpService) {
+
+    this.gridOptions = <GridOptions>{
+      columnDefs: [{ headerName: 'ID', field: 'elemid', width: 50 },
+      { headerName: 'Element Name', field: 'elemname' },
+      { headerName: 'Element Date', field: 'elemdate', width: 150 },
+      {
+        headerName: 'Edit',
+        cellRendererFramework: ChildEditElementComponent,
+        width: 150
+      }],
+      context: {
+        componentParent: this
+      },
+      enableColResize: true,
+
+    };
+
+    // this.getRowNodeId = function (data) {
+    //   return data.id;
+    // };
   }
 
   onGridElReady(params) {
@@ -50,6 +63,29 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // tslint:disable-next-line:prefer-const
+
+    this.httpService.postdata('http://localhost:8080/templater/api', { xyz: 300, xyz1: 200 }).subscribe(
+      (r) => {
+        console.log(r);
+        // tslint:disable-next-line:triple-equals
+        if (r.status == true) {
+          this.elementData = r.data.elem;
+        } else {
+          alert(r.msg);
+        }
+      });
+  }
+
+  public methodFromParent(cellid) {
+    // tslint:disable-next-line:prefer-const
+    let rowNode = this.gridElApi.getRowNode(cellid);
+    console.log(rowNode);
+
+    // tslint:disable-next-line:prefer-const
+    let newPrice = Math.floor(Math.random() * 100000);
+    rowNode.setDataValue('elemname', newPrice);
   }
 
 }
