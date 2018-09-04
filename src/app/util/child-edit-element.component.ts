@@ -18,8 +18,7 @@ export class ChildEditElementComponent implements ICellRendererAngularComp {
     }
 
     public invokeParentMethod() {
-        console.log(this.params.data.elemid);
-        this.params.context.componentParent.methodFromParent(this.params.rowIndex);
+        this.params.context.componentParent.methodFromParent(this.params.data, this.params.rowIndex);
     }
 
     refresh(): boolean {

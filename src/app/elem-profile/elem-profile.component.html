@@ -1,3 +1,62 @@
-<p>
-  elem-profile works!
-</p>
+<div class="row rexparent">
+  <div class="col-xs-12 col-sm-8 col-md-8 redx">
+    <div class="col-xs-12 profileLabel">
+      <h4>RULES</h4>
+    </div>
+    <form (ngSubmit)="onAddRule(f)" #f="ngForm" novalidate>
+      <div class="form-row">
+        <div class="col-7">
+          <div class="form-group">
+            <label for="txtloc">Table Location</label>
+            <select name="txtloc" class="form-control" [(ngModel)]="selectedloc" required>
+              <option [ngValue]="undefined" disabled selected> Please select one option </option>
+              <option *ngFor="let c of locData" [ngValue]="c">{{c.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="txtrow">Row Number :</label>
+            <input type="text" class="form-control" name="txtrow" ngModel placeholder="Row..">
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="txtcol">Column Number :</label>
+            <input type="text" class="form-control" name="txtcol" ngModel placeholder="Column..">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="csskey">CSS PROPERTY</label>
+          <select name="csskey" class="form-control" [(ngModel)]="selectedcsskey" required>
+            <option [ngValue]="undefined" disabled selected> Please select one option </option>
+            <option *ngFor="let c of cssData" [ngValue]="c">{{c.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="txtcssval">CSS VALUE</label>
+          <input type="text" name="txtcssval" name="cssval" ngModel class="form-control" placeholder="Column.."
+            required>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="btnsave">Create Rule ?</label>
+          <button type="submit" name="btnsave" class="btn btn-primary">ADD RULE</button>
+        </div>
+      </div>
+
+    </form>
+    <ag-grid-angular style="width: 100%;" class="ag-theme-balham" [enableSorting]="true" [enableFilter]="true" id="myGridER"
+      [gridOptions]="gridOptionsER" [getRowNodeId]="getRowNodeId" [rowData]="rulelist" [columnDefs]="columnDefsER"
+      (gridReady)="onGridElRReady($event)">
+    </ag-grid-angular>
+  </div>
+  <div class="col-xs-12 col-sm-4 col-md-4 redx">
+    <div class="col-xs-12 profileLabel">
+      <h4>OUTPUT</h4>
+    </div>
+    <pre style="height: 100%; width:100%; border: thin solid grey">{{ compiledrules }}</pre>
+  </div>
+</div>

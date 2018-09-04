@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../shared/http.service';
 import { GridOptions } from 'ag-grid';
 import { ChildEditElementComponent } from '../util/child-edit-element.component';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbdModalContentComponent } from '../util/modal-component';
 
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -29,7 +31,7 @@ export class HomeComponent implements OnInit {
 
   public gridOptions: GridOptions;
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private modalService: NgbModal, private router: Router) {
 
     this.gridOptions = <GridOptions>{
       columnDefs: [{ headerName: 'ID', field: 'elemid', width: 50 },
@@ -47,9 +49,6 @@ export class HomeComponent implements OnInit {
 
     };
 
-    // this.getRowNodeId = function (data) {
-    //   return data.id;
-    // };
   }
 
   onGridElReady(params) {
@@ -78,14 +77,19 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  public methodFromParent(cellid) {
+  public methodFromParent(cellData, cellid) {
     // tslint:disable-next-line:prefer-const
-    let rowNode = this.gridElApi.getRowNode(cellid);
-    console.log(rowNode);
+    // let rowNode = this.gridElApi.getRowNode(cellid);
+    // console.log(rowNode);
 
     // tslint:disable-next-line:prefer-const
-    let newPrice = Math.floor(Math.random() * 100000);
-    rowNode.setDataValue('elemname', newPrice);
+    // let newPrice = Math.floor(Math.random() * 100000);
+    // rowNode.setDataValue('elemname', newPrice);
+
+    // modal
+    // const modalRef = this.modalService.open(NgbdModalContentComponent);
+    // modalRef.componentInstance.rowData = cellData;
+    this.router.navigate(['/elem'], { queryParams: { elemid: JSON.stringify(cellData.elemid) } });
   }
 
 }

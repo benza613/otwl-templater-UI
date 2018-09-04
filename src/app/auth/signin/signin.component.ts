@@ -14,6 +14,8 @@ export class SigninComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
+    let element: HTMLElement = document.getElementById('btnSign') as HTMLElement;
+    element.click();
   }
 
   onLogin(form: NgForm) {

@@ -13,11 +13,15 @@ import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth-guard.service';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { HomeComponent } from './home/home.component';
+import { ElemProfileComponent } from './elem-profile/elem-profile.component';
+
 import { CoreModule } from './core/core.module';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbdModalContentComponent } from './util/modal-component';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { ChildEditElementComponent } from './util/child-edit-element.component';
-import { ElemProfileComponent } from './elem-profile/elem-profile.component';
 
 @NgModule({
   declarations: [
@@ -26,10 +30,12 @@ import { ElemProfileComponent } from './elem-profile/elem-profile.component';
     ErrorPageComponent,
     HomeComponent,
     ChildEditElementComponent,
-    ElemProfileComponent
+    ElemProfileComponent,
+    NgbdModalContentComponent
   ],
   imports: [
     BrowserModule,
+    NgbModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
@@ -37,6 +43,9 @@ import { ElemProfileComponent } from './elem-profile/elem-profile.component';
     HttpClientModule,
     CommonModule,
     AgGridModule.withComponents([ChildEditElementComponent])
+  ],
+  entryComponents: [
+    NgbdModalContentComponent,
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
