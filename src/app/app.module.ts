@@ -20,8 +20,17 @@ import { CoreModule } from './core/core.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbdModalContentComponent } from './util/modal-component';
 
+import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
+import { ElemAddComponent } from './elem-add/elem-add.component';
+
+import { Angular2PromiseButtonModule } from 'angular2-promise-buttons/dist';
+
 import { AgGridModule } from 'ag-grid-angular';
 import { ChildEditElementComponent } from './util/child-edit-element.component';
+import { ChildDeleteElementComponent } from './util/child-del-element.component';
+import { ChildCopyElementComponent } from './util/child-copy-element.component';
+import { ChildRuleDelElementComponent } from './util/child-rule-del-element.component';
+
 
 @NgModule({
   declarations: [
@@ -30,8 +39,12 @@ import { ChildEditElementComponent } from './util/child-edit-element.component';
     ErrorPageComponent,
     HomeComponent,
     ChildEditElementComponent,
+    ChildDeleteElementComponent,
+    ChildCopyElementComponent,
+    ChildRuleDelElementComponent,
     ElemProfileComponent,
-    NgbdModalContentComponent
+    NgbdModalContentComponent,
+    ElemAddComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +55,23 @@ import { ChildEditElementComponent } from './util/child-edit-element.component';
     CoreModule,
     HttpClientModule,
     CommonModule,
-    AgGridModule.withComponents([ChildEditElementComponent])
+    Angular2PromiseButtonModule.forRoot({
+      // your custom config goes here
+      spinnerTpl: '<span class="btn-spinner"></span>',
+      // disable buttons when promise is pending
+      disableBtn: true,
+      // the class used to indicate a pending promise
+      btnLoadingClass: 'is-loading',
+      // only disable and show is-loading class for clicked button
+      // even when they share the same promise
+      handleCurrentBtnOnly: false,
+    }),
+    NgxSmartModalModule.forRoot(),
+    AgGridModule.withComponents([
+      ChildEditElementComponent,
+      ChildRuleDelElementComponent,
+      ChildCopyElementComponent,
+      ChildDeleteElementComponent])
   ],
   entryComponents: [
     NgbdModalContentComponent,

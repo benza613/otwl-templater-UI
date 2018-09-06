@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '../shared/http.service';
 import { GridOptions } from 'ag-grid';
+import { ChildRuleDelElementComponent } from '../util/child-rule-del-element.component';
+
 import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-elem-profile',
@@ -13,51 +15,10 @@ export class ElemProfileComponent implements OnInit {
   private routeData: any;
   private elementData: any;
   private gridElApi;
+  addRulePromise;
 
   compiledrules = '';
-  rulelist = [
-    {
-      tloc: 'thead',
-      trow: '',
-      tcol: '',
-      tkey: 'color',
-      tval: 'red',
-    },
-    {
-      tloc: 'thead',
-      trow: '',
-      tcol: '',
-      tkey: 'border',
-      tval: 'thin solid red',
-    },
-    {
-      tloc: 'thead',
-      trow: '*',
-      tcol: '',
-      tkey: 'font-family',
-      tval: 'Helvetica',
-    },
-    {
-      tloc: 'thead',
-      trow: '2',
-      tcol: '',
-      tkey: 'border',
-      tval: 'thin solid red',
-    },
-    {
-      tloc: 'thead',
-      trow: '1',
-      tcol: '',
-      tkey: 'font-family',
-      tval: 'Helvetica',
-    },
-    {
-      tloc: 'thead',
-      trow: '',
-      tcol: '3',
-      tkey: 'font-style',
-      tval: 'italic bold',
-    }];
+  rulelist = [];
 
   cssData = [
     { name: 'background' },
@@ -71,6 +32,7 @@ export class ElemProfileComponent implements OnInit {
     { name: 'border-color' },
     { name: 'border-style' },
     { name: 'content' },
+    { name: 'color' },
     { name: 'font' },
     { name: 'font-family' },
     { name: 'font-size' },
@@ -99,7 +61,7 @@ export class ElemProfileComponent implements OnInit {
         { headerName: 'Table Column', field: 'tcol' },
         { headerName: 'CSS PROPERTY', field: 'tkey' },
         { headerName: 'PROPERTY VALUE', field: 'tval' },
-        { headerName: 'DEL' }
+        { headerName: 'DEL', cellRendererFramework: ChildRuleDelElementComponent }
       ],
       context: {
         componentParent: this
@@ -121,6 +83,7 @@ export class ElemProfileComponent implements OnInit {
             // tslint:disable-next-line:triple-equals
             if (r.status == true) {
               this.elementData = r.data;
+              this.rulelist = this.elementData.rules;
             } else {
               alert(r.msg);
             }
@@ -145,23 +108,54 @@ export class ElemProfileComponent implements OnInit {
       alert('Complete Missing Fields');
       return;
     }
-    console.log(form.value);
-    this.rulelist.push({
+
+    // tslint:disable-next-line:prefer-const
+    let params = {
       tloc: form.value.txtloc.name,
       trow: form.value.txtrow,
       tcol: form.value.txtcol,
       tkey: form.value.csskey.name,
       tval: form.value.cssval,
-    });
-    this.gridElApi.setRowData(this.rulelist);
-    form.reset();
+      elemid: this.routeData.elemid,
+      rid: ''
+    };
 
-    this.ruleListTransform();
+
+    this.addRulePromise = new Promise((resolve, reject) => {
+      this.httpService.postdata('http://localhost:8080/templater/api/set/elemrule', params).subscribe(
+        (r) => {
+          console.log(r);
+          // tslint:disable-next-line:triple-equals
+          if (r.status == true) {
+            params.rid = r.data;
+            this.rulelist.push(params);
+            this.gridElApi.setRowData(this.rulelist);
+
+            form.reset();
+
+            this.ruleListTransform();
+
+            resolve();
+          } else {
+            reject();
+            alert(r.msg);
+          }
+
+        });
+
+    });
+
+  }
+
+  public onDeleteRule(cellData, cellid) {
+    console.log(cellData);
   }
 
   ruleListTransform() {
 
-    this.httpService.postdata('http://localhost:8080/templater/transform/rule', { rulelist: this.rulelist }).subscribe(
+    const params = { elemname: JSON.parse(this.routeData.elemname), rulelist: JSON.stringify(this.rulelist) };
+
+    this.httpService.postdata('http://localhost:8080/templater/transform/rule', params).subscribe(
       (r) => {
         console.log(r);
 

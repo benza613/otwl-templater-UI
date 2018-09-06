@@ -1,7 +1,7 @@
 <div class="row rexparent">
   <div class="col-xs-12 col-sm-8 col-md-8 redx">
     <div class="col-xs-12 profileLabel">
-      <h4>RULES</h4>
+      <h4>RULESET FOR {{routeData.elemname}}</h4>
     </div>
     <form (ngSubmit)="onAddRule(f)" #f="ngForm" novalidate>
       <div class="form-row">
@@ -43,7 +43,7 @@
         </div>
         <div class="form-group col-md-2">
           <label for="btnsave">Create Rule ?</label>
-          <button type="submit" name="btnsave" class="btn btn-primary">ADD RULE</button>
+          <button type="submit" name="btnsave" class="btn btn-primary" [promiseBtn]="addRulePromise">ADD RULE</button>
         </div>
       </div>
 

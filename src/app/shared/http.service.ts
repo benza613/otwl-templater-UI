@@ -17,7 +17,7 @@ export class HttpService {
         // tslint:disable-next-line:prefer-const
         for (let key in hjson) {
             if (hjson.hasOwnProperty(key)) {
-                data += key + '=' + encodeURIComponent(JSON.stringify(hjson[key])) + '&';
+                data += key + '=' + encodeURIComponent(hjson[key]) + '&';
 
             }
         }

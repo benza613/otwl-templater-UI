@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h4 class="modal-title">ADD NEW ELEMENT PROFILE</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="onAddRule(f)" #f="ngForm" novalidate>
+    <div class="form-row">
+      <div class="col">
+        <div class="form-group">
+          <input type="text" class="form-control" name="txtrow" ngModel aria-describedby="elemHelpBlock" placeholder="Element Name..">
+          <small id="elemHelpBlock" class="form-text text-muted">
+            This profile name may be 4-25 characters long, contain letters, numbers and/or hypens, but must not contain spaces, special characters, or emoji.
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+
+      <div class="col">
+        <div class="form-group">
+          <select name="txtloc" class="form-control" [(ngModel)]="selectedloc" required>
+            <option [ngValue]="undefined" disabled selected>Please select an Element Type </option>
+            <option *ngFor="let c of locData" [ngValue]="c">{{c.name}}</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  <button type="button" class="btn btn-outline-success" (click)="activeModal.close('Close click')">Add New Element</button>
+</div>

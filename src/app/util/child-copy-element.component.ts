@@ -2,24 +2,24 @@ import { Component } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 
 @Component({
-    selector: 'app-child-edit-cell',
+    selector: 'app-child-copy-cell',
     // tslint:disable-next-line:max-line-length
-    template: `<button (click)="invokeParentEditMethod()" class="btn btn-info"><i style="font-size: 14px;" class="far fa-edit"></i> Edit</button>`,
+    template: `<button (click)="invokeParentCopyMethod()" class="btn btn-warning"><i style="font-size: 14px;" class="far fa-copy"></i> Copy</button>`,
     styles: [
         `.btn {
             line-height: 0.5
         }`
     ]
 })
-export class ChildEditElementComponent implements ICellRendererAngularComp {
+export class ChildCopyElementComponent implements ICellRendererAngularComp {
     public params: any;
 
     agInit(params: any): void {
         this.params = params;
     }
 
-    public invokeParentEditMethod() {
-        this.params.context.componentParent.editElement(this.params.data, this.params.rowIndex);
+    public invokeParentCopyMethod() {
+        this.params.context.componentParent.copyElement(this.params.data, this.params.rowIndex);
     }
 
     refresh(): boolean {

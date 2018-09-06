@@ -1,22 +1,21 @@
 <div class="row rexparent">
   <div class="col-xs-12 col-sm-6 col-md-6 redx">
     <div class="col-xs-12 profileLabel">
-      <h4>ELEMENT PROFILES</h4>
+      <h4>ELEMENT PROFILES <button type="button" (click)="addElement()" class="btn btn-info"> <i class="fas fa-plus"></i>
+        </button></h4>
     </div>
-    <ag-grid-angular style="width: 100%;" 
-    class="ag-theme-balham" [enableSorting]="true" [enableFilter]="true"
-    id="myGrid"
-    [gridOptions]="gridOptions"
-    [getRowNodeId]="getRowNodeId"
-    [rowData]="elementData" [columnDefs]="columnDefs1" (gridReady)="onGridElReady($event)">
+    <ag-grid-angular style="width: 100%;" class="ag-theme-balham" [enableSorting]="true" [enableFilter]="true" id="myGrid"
+      [gridOptions]="gridOptions" [getRowNodeId]="getRowNodeId" [rowData]="elementData" [columnDefs]="columnDefs1"
+      (gridReady)="onGridElReady($event)">
     </ag-grid-angular>
   </div>
   <div class="col-xs-12 col-sm-6 col-md-6 redx">
     <div class="col-xs-12 profileLabel">
       <h4>EMAIL PROFILES</h4>
     </div>
-    <ag-grid-angular style="width: 100%;" class="ag-theme-balham" [enableSorting]="true" id="myGridEl"
-      [rowData]="profileData" [columnDefs]="columnDefs2" (gridReady)="onGridEmlReady($event)">
+    <ag-grid-angular style="width: 100%;" class="ag-theme-balham" [enableSorting]="true" id="myGridEl" [rowData]="profileData"
+      [columnDefs]="columnDefs2" (gridReady)="onGridEmlReady($event)">
     </ag-grid-angular>
   </div>
 </div>
+
