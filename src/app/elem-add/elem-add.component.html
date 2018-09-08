@@ -1,7 +1,7 @@
 <!-- Data in modal -->
 <ngx-smart-modal #elemAddModal identifier="elemAddModal" customClass="nsm-dialog-animation-ltr">
   <div class="modal-header">
-    <h4 class="modal-title">ADD NEW ELEMENT PROFILE </h4>
+    <h4 class="modal-title">{{formData.copyid == undefined ? 'ADD NEW':'COPY' }} ELEMENT PROFILE </h4>
 
   </div>
   <div class="modal-body">
@@ -36,6 +36,6 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="no()">Close</button>
-    <button type="button" class="btn btn-outline-success" (click)="add()">Add New Element</button>
+    <button type="button" class="btn btn-outline-success" (click)="add()">{{formData.copyid == undefined ? 'Add New':'Copy' }} Element</button>
   </div>
 </ngx-smart-modal>

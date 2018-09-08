@@ -148,7 +148,27 @@ export class ElemProfileComponent implements OnInit {
   }
 
   public onDeleteRule(cellData, cellid) {
-    console.log(cellData);
+    const paramsdel = {
+      ruleid: cellData.rid
+    };
+
+    this.httpService.postdata('http://localhost:8080/templater/api/del/elemrule', paramsdel).subscribe(
+      (r) => {
+        console.log(r);
+        // tslint:disable-next-line:triple-equals
+        if (r.status == true) {
+          const selected = this.gridElApi.getFocusedCell();
+          this.gridOptionsER.rowData.splice(selected.rowIndex, 1);
+
+          this.gridElApi.setRowData(this.gridOptionsER.rowData);
+          this.ruleListTransform();
+
+        } else {
+
+          alert(r.msg);
+        }
+
+      });
   }
 
   ruleListTransform() {

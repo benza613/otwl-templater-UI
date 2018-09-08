@@ -12,7 +12,8 @@ export class ElemAddComponent implements OnInit, AfterViewInit {
     elemname: '',
     typeList: [],
     typeSelected: undefined,
-    action: undefined
+    action: undefined,
+    copyid: undefined,
   };
 
   constructor(public mdservice: NgxSmartModalService) { }

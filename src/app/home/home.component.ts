@@ -37,6 +37,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     typeList: ['Table'],
     typeSelected: undefined,
     action: undefined,
+    copyid: undefined
   };
 
   public gridOptions: GridOptions;
@@ -103,7 +104,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
     this.mdservice.getModal('elemAddModal')
       .onClose.subscribe((modal: NgxSmartModalComponent) => {
-        this.addNewElementOnClose(modal.getData());
+        this.add_COpy_ElementOnClose(modal.getData());
       });
   }
 
@@ -120,10 +121,27 @@ export class HomeComponent implements AfterViewInit, OnInit {
   }
 
   public deleteElement(cellData, cellid) {
-    const selected = this.gridElApi.getFocusedCell();
-    this.gridOptions.rowData.splice(selected.rowIndex, 1);
+    console.log(cellData);
+    const paramsdel = {
+      elemid: cellData.elemid
+    };
 
-    this.gridElApi.setRowData(this.gridOptions.rowData);
+    this.httpService.postdata('http://localhost:8080/templater/api/del/elem', paramsdel).subscribe(
+      (r) => {
+        console.log(r);
+        // tslint:disable-next-line:triple-equals
+        if (r.status == true) {
+          const selected = this.gridElApi.getFocusedCell();
+          this.gridOptions.rowData.splice(selected.rowIndex, 1);
+
+          this.gridElApi.setRowData(this.gridOptions.rowData);
+
+        } else {
+
+          alert(r.msg);
+        }
+
+      });
   }
 
   public addElement() {
@@ -131,17 +149,56 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.modalDataSet.elemName = '';
     this.modalDataSet.typeSelected = undefined;
     this.modalDataSet.action = undefined;
+    this.modalDataSet.copyid = undefined;
 
     this.mdservice.getModal('elemAddModal').open();
 
   }
 
-  public addNewElementOnClose(x) {
+  public copyElement(cellData, cellid) {
+    this.modalDataSet.elemName = '';
+    this.modalDataSet.typeSelected = undefined;
+    this.modalDataSet.action = undefined;
+    this.modalDataSet.copyid = cellData.elemid;
+
+    this.mdservice.getModal('elemAddModal').open();
+  }
+
+  public add_COpy_ElementOnClose(x) {
+    console.log(x.typeSelected);
+    console.log(x.elemName);
+
+
 
     if (x.action === 'yes') {
-      alert('yes');
+      const paramsadd = {
+        elemName: x.elemName,
+        typeSelected: x.typeSelected
+      };
+
+      this.httpService.postdata('http://localhost:8080/templater/api/set/elem', paramsadd).subscribe(
+        (r) => {
+          console.log(r);
+          // tslint:disable-next-line:triple-equals
+          if (r.status == true) {
+
+            const newRow = {
+              elemid: r.elemid,
+              elemname: x.elemName,
+              elemdate: r.elemdate
+            };
+
+            this.elementData.push(newRow);
+            this.gridElApi.setRowData(this.elementData);
+
+          } else {
+
+            alert(r.msg);
+          }
+
+        });
     } else {
-      alert('no');
+      console.log('no');
     }
   }
 }
