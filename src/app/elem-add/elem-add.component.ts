@@ -8,8 +8,8 @@ import { NgxSmartModalComponent, NgxSmartModalService } from 'ngx-smart-modal';
 })
 export class ElemAddComponent implements OnInit, AfterViewInit {
 
-  formData = {
-    elemname: '',
+ public formData = {
+    elemName: '',
     typeList: [],
     typeSelected: undefined,
     action: undefined,

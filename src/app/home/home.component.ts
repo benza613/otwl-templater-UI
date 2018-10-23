@@ -5,7 +5,6 @@ import { ChildEditElementComponent } from '../util/child-edit-element.component'
 import { ChildDeleteElementComponent } from '../util/child-del-element.component';
 import { ChildCopyElementComponent } from '../util/child-copy-element.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbdModalContentComponent } from '../util/modal-component';
 import { NgxSmartModalComponent, NgxSmartModalService } from 'ngx-smart-modal';
 
 import { Router } from '@angular/router';
@@ -15,9 +14,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements AfterViewInit, OnInit {
-  private getRowNodeId;
-  private gridElApi;
-  private gridEmlApi;
+  public getRowNodeId;
+  public gridElApi;
+  public gridEmlApi;
   elementData = [];
 
   columnDefs2 = [

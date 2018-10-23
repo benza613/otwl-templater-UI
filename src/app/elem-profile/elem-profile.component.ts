@@ -12,11 +12,11 @@ import { NgForm } from '@angular/forms';
 })
 export class ElemProfileComponent implements OnInit {
 
-  private routeData: any;
-  private elementData: any;
-  private gridElApi;
+  public routeData: any;
+  public elementData: any;
+  public gridElApi;
   addRulePromise;
-
+public getRowNodeId;
   compiledrules = '';
   rulelist = [];
 

@@ -21,7 +21,7 @@ export class SigninComponent implements OnInit {
   onLogin(form: NgForm) {
     console.log('login button');
     this.authService.login(form.value).then((res) => {
-      this.router.navigate(['/home']);
+      this.router.navigate(['home']);
     });
   }
 }

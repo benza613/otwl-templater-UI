@@ -8,11 +8,11 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { AuthGuard } from './auth-guard.service';
 
 const appRoutes: Routes = [
-    { path: '', component: SigninComponent },
-    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'elem', component: ElemProfileComponent, canActivate: [AuthGuard] },
-    { path: 'not-found', component: ErrorPageComponent, data: { message: 'Page not found!' } },
-    { path: '**', redirectTo: '/not-found' }
+    { path: 'resET', component: SigninComponent },
+    { path: 'resET/home', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'resET/elem', component: ElemProfileComponent, canActivate: [AuthGuard] },
+    { path: 'resET/not-found', component: ErrorPageComponent, data: { message: 'Page not found!' } },
+    { path: 'resET/**', redirectTo: '/not-found' }
 ];
 
 @NgModule({

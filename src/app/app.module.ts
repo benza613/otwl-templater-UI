@@ -18,7 +18,7 @@ import { ElemProfileComponent } from './elem-profile/elem-profile.component';
 import { CoreModule } from './core/core.module';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbdModalContentComponent } from './util/modal-component';
+// import { NgbdModalContentComponent } from './util/modal-component';
 
 import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 import { ElemAddComponent } from './elem-add/elem-add.component';
@@ -43,7 +43,7 @@ import { ChildRuleDelElementComponent } from './util/child-rule-del-element.comp
     ChildCopyElementComponent,
     ChildRuleDelElementComponent,
     ElemProfileComponent,
-    NgbdModalContentComponent,
+    // NgbdModalContentComponent,
     ElemAddComponent
   ],
   imports: [
@@ -74,7 +74,7 @@ import { ChildRuleDelElementComponent } from './util/child-rule-del-element.comp
       ChildDeleteElementComponent])
   ],
   entryComponents: [
-    NgbdModalContentComponent,
+    // NgbdModalContentComponent,
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
