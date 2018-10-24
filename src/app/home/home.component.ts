@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 import { HttpService } from '../shared/http.service';
 import { GridOptions } from 'ag-grid';
 import { ChildEditElementComponent } from '../util/child-edit-element.component';
@@ -13,10 +13,13 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements AfterViewInit, OnInit {
+export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   public getRowNodeId;
   public gridElApi;
   public gridEmlApi;
+
+  public home_subscribers: any = {};
+
   elementData = [];
 
   columnDefs2 = [
@@ -100,11 +103,14 @@ export class HomeComponent implements AfterViewInit, OnInit {
 
     this.mdservice.setModalData(this.modalDataSet, 'elemAddModal');
 
+    this.home_subscribers.elemDiag = this.mdservice.getModal('elemAddModal').onClose.subscribe((modal: NgxSmartModalComponent) => {
+      this.add_COpy_ElementOnClose(modal.getData());
+    });
+  }
 
-    this.mdservice.getModal('elemAddModal')
-      .onClose.subscribe((modal: NgxSmartModalComponent) => {
-        this.add_COpy_ElementOnClose(modal.getData());
-      });
+
+  ngOnDestroy() {
+    this.home_subscribers.elemDiag.unsubscribe();
   }
 
   public editElement(cellData, cellid) {
@@ -164,40 +170,76 @@ export class HomeComponent implements AfterViewInit, OnInit {
   }
 
   public add_COpy_ElementOnClose(x) {
-    console.log(x.typeSelected);
-    console.log(x.elemName);
+    // console.log(x.typeSelected);
+    console.log(x);
 
 
 
     if (x.action === 'yes') {
-      const paramsadd = {
-        elemName: x.elemName,
-        typeSelected: x.typeSelected
-      };
 
-      this.httpService.postdata('http://localhost:8080/templater/api/set/elem', paramsadd).subscribe(
-        (r) => {
-          console.log(r);
-          // tslint:disable-next-line:triple-equals
-          if (r.status == true) {
+      // if (x.copyid !== undefined) {
+      //   const paramsadd = {
+      //     elemName: x.elemName,
+      //     typeSelected: x.typeSelected
+      //   };
 
-            const newRow = {
-              elemid: r.elemid,
-              elemname: x.elemName,
-              elemdate: r.elemdate
-            };
+      //   this.httpService.postdata('http://localhost:8080/templater/api/set/elem', paramsadd).subscribe(
+      //     (r) => {
+      //       console.log(r);
+      //       // tslint:disable-next-line:triple-equals
+      //       if (r.status == true) {
 
-            this.elementData.push(newRow);
-            this.gridElApi.setRowData(this.elementData);
+      //         const newRow = {
+      //           elemid: r.elemid,
+      //           elemname: x.elemName,
+      //           elemdate: r.elemdate
+      //         };
 
-          } else {
+      //         this.elementData.push(newRow);
+      //         this.gridElApi.setRowData(this.elementData);
 
-            alert(r.msg);
-          }
+      //       } else {
 
-        });
+      //         alert(r.msg);
+      //       }
+
+      //     });
+      // } else {
+      //   const paramscopy = {
+      //     elemName: x.elemName,
+      //     copyid: x.copyid,
+      //     typeSelected: x.typeSelected
+      //   };
+
+      //   this.httpService.postdata('http://localhost:8080/templater/api/copy/elem', paramscopy).subscribe(
+      //     (r) => {
+      //       console.log(r);
+      //       // tslint:disable-next-line:triple-equals
+      //       if (r.status == true) {
+
+      //         const newRow = {
+      //           elemid: r.elemid,
+      //           elemname: x.elemName,
+      //           elemdate: r.elemdate
+      //         };
+
+      //         this.elementData.push(newRow);
+      //         this.gridElApi.setRowData(this.elementData);
+
+      //       } else {
+
+      //         alert(r.msg);
+      //       }
+
+      //     });
+      // }
+
+
     } else {
       console.log('no');
     }
+
   }
+
+
 }

@@ -14,14 +14,14 @@ export class SigninComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
-    let element: HTMLElement = document.getElementById('btnSign') as HTMLElement;
+    const element: HTMLElement = document.getElementById('btnSign') as HTMLElement;
     element.click();
   }
 
   onLogin(form: NgForm) {
     console.log('login button');
     this.authService.login(form.value).then((res) => {
-      this.router.navigate(['resET/home']);
+      this.router.navigate(['home']);
     });
   }
 }
