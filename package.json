@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "buildReset": "ng build --prod --base-href /resET/",
+    "buildReset": "ng build --prod --base-href /tempformatter/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -177,62 +177,62 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
     if (x.action === 'yes') {
 
-      // if (x.copyid !== undefined) {
-      //   const paramsadd = {
-      //     elemName: x.elemName,
-      //     typeSelected: x.typeSelected
-      //   };
+      if (x.copyid !== undefined) {
+        const paramsadd = {
+          elemName: x.elemName,
+          typeSelected: x.typeSelected
+        };
 
-      //   this.httpService.postdata('http://localhost:8080/templater/api/set/elem', paramsadd).subscribe(
-      //     (r) => {
-      //       console.log(r);
-      //       // tslint:disable-next-line:triple-equals
-      //       if (r.status == true) {
+        this.httpService.postdata('http://localhost:8080/templater/api/set/elem', paramsadd).subscribe(
+          (r) => {
+            console.log(r);
+            // tslint:disable-next-line:triple-equals
+            if (r.status == true) {
 
-      //         const newRow = {
-      //           elemid: r.elemid,
-      //           elemname: x.elemName,
-      //           elemdate: r.elemdate
-      //         };
+              const newRow = {
+                elemid: r.elemid,
+                elemname: x.elemName,
+                elemdate: r.elemdate
+              };
 
-      //         this.elementData.push(newRow);
-      //         this.gridElApi.setRowData(this.elementData);
+              this.elementData.push(newRow);
+              this.gridElApi.setRowData(this.elementData);
 
-      //       } else {
+            } else {
 
-      //         alert(r.msg);
-      //       }
+              alert(r.msg);
+            }
 
-      //     });
-      // } else {
-      //   const paramscopy = {
-      //     elemName: x.elemName,
-      //     copyid: x.copyid,
-      //     typeSelected: x.typeSelected
-      //   };
+          });
+      } else {
+        const paramscopy = {
+          elemName: x.elemName,
+          copyid: x.copyid,
+          typeSelected: x.typeSelected
+        };
 
-      //   this.httpService.postdata('http://localhost:8080/templater/api/copy/elem', paramscopy).subscribe(
-      //     (r) => {
-      //       console.log(r);
-      //       // tslint:disable-next-line:triple-equals
-      //       if (r.status == true) {
+        this.httpService.postdata('http://localhost:8080/templater/api/copy/elem', paramscopy).subscribe(
+          (r) => {
+            console.log(r);
+            // tslint:disable-next-line:triple-equals
+            if (r.status == true) {
 
-      //         const newRow = {
-      //           elemid: r.elemid,
-      //           elemname: x.elemName,
-      //           elemdate: r.elemdate
-      //         };
+              const newRow = {
+                elemid: r.elemid,
+                elemname: x.elemName,
+                elemdate: r.elemdate
+              };
 
-      //         this.elementData.push(newRow);
-      //         this.gridElApi.setRowData(this.elementData);
+              this.elementData.push(newRow);
+              this.gridElApi.setRowData(this.elementData);
 
-      //       } else {
+            } else {
 
-      //         alert(r.msg);
-      //       }
+              alert(r.msg);
+            }
 
-      //     });
-      // }
+          });
+      }
 
 
     } else {
