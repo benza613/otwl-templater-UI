@@ -110,13 +110,13 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
 
   ngOnDestroy() {
+    // reset modal data variable locking
+    this.mdservice.resetModalData('elemAddModal');
+    // unsubscribe to avoid multiple listeners
     this.home_subscribers.elemDiag.unsubscribe();
   }
 
   public editElement(cellData, cellid) {
-    // let rowNode = this.gridElApi.getRowNode(cellid);
-    // let newPrice = Math.floor(Math.random() * 100000);
-    // rowNode.setDataValue('elemname', newPrice);
 
     const params = {
       elemid: JSON.stringify(cellData.elemid),
@@ -155,6 +155,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
     this.modalDataSet.typeSelected = undefined;
     this.modalDataSet.action = undefined;
     this.modalDataSet.copyid = undefined;
+    console.log(this.modalDataSet);
 
     this.mdservice.getModal('elemAddModal').open();
 
@@ -170,10 +171,6 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   public add_COpy_ElementOnClose(x) {
-    // console.log(x.typeSelected);
-    console.log(x);
-
-
 
     if (x.action === 'yes') {
 
