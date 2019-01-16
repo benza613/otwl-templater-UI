@@ -1,11 +1,11 @@
 <div class="row rexparent">
   <div class="col-xs-12 col-sm-8 col-md-8 redx">
     <div class="col-xs-12 profileLabel">
-      <h4>RULESET FOR {{routeData.elemname}}</h4>
+      <h4>RULESET FOR {{routeData.elemname}} </h4>
     </div>
     <form (ngSubmit)="onAddRule(f)" #f="ngForm" novalidate>
       <div class="form-row">
-        <div class="col-7">
+        <div class="col-md-6">
           <div class="form-group">
             <label for="txtloc">Table Location</label>
             <select name="txtloc" class="form-control" [(ngModel)]="selectedloc" required>
@@ -14,17 +14,21 @@
             </select>
           </div>
         </div>
-        <div class="col">
+        <div class="col-md-2">
           <div class="form-group">
             <label for="txtrow">Row Number :</label>
             <input type="text" class="form-control" name="txtrow" ngModel placeholder="Row..">
           </div>
         </div>
-        <div class="col">
+        <div class="col-md-2">
           <div class="form-group">
             <label for="txtcol">Column Number :</label>
             <input type="text" class="form-control" name="txtcol" ngModel placeholder="Column..">
           </div>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="btnprefrename">Rename Profile ?</label>
+          <button type="submit" name="btnsave" class="btn btn-info" (click)="renameProfile()">RENAME</button>
         </div>
       </div>
 

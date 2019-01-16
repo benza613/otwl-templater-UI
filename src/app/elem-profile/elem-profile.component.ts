@@ -16,8 +16,9 @@ export class ElemProfileComponent implements OnInit {
   public elementData: any;
   public gridElApi;
   addRulePromise;
-public getRowNodeId;
+  public getRowNodeId;
   compiledrules = '';
+  renameProfile;
   rulelist = [];
 
   cssData = [
@@ -75,7 +76,7 @@ public getRowNodeId;
     this.route.queryParams
       .subscribe(params => {
         this.routeData = params;
-        console.log(this.routeData); // {order: "popular"}
+        console.log('routeData', this.routeData); // {order: "popular"}
 
         this.httpService.postdata('http://localhost:8080/templater/api/get/elem', { elemid: this.routeData.elemid }).subscribe(
           (r) => {
@@ -145,6 +146,16 @@ public getRowNodeId;
 
     });
 
+// DO MODAL OF BOOTSTRAP 
+
+    this.renameProfile = new Promise((resolve, reject) => {
+      if ('asd' == 'asd') {
+        resolve();
+
+      } else {
+        reject();
+      }
+    });
   }
 
   public onDeleteRule(cellData, cellid) {
