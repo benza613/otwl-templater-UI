@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { SigninComponent } from './auth/signin/signin.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +18,6 @@ import { ElemProfileComponent } from './elem-profile/elem-profile.component';
 import { CoreModule } from './core/core.module';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { NgbdModalContentComponent } from './util/modal-component';
 
 import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 import { ElemAddComponent } from './elem-add/elem-add.component';
@@ -30,6 +29,7 @@ import { ChildEditElementComponent } from './util/child-edit-element.component';
 import { ChildDeleteElementComponent } from './util/child-del-element.component';
 import { ChildCopyElementComponent } from './util/child-copy-element.component';
 import { ChildRuleDelElementComponent } from './util/child-rule-del-element.component';
+import { RenameFormComponent } from './util/rename-form/rename-form.component';
 
 
 @NgModule({
@@ -43,13 +43,14 @@ import { ChildRuleDelElementComponent } from './util/child-rule-del-element.comp
     ChildCopyElementComponent,
     ChildRuleDelElementComponent,
     ElemProfileComponent,
-    // NgbdModalContentComponent,
-    ElemAddComponent
+    ElemAddComponent,
+    RenameFormComponent
   ],
   imports: [
     BrowserModule,
-    NgbModule,
+    NgbModule.forRoot(),
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
     CoreModule,
@@ -72,9 +73,10 @@ import { ChildRuleDelElementComponent } from './util/child-rule-del-element.comp
       ChildRuleDelElementComponent,
       ChildCopyElementComponent,
       ChildDeleteElementComponent])
+
   ],
   entryComponents: [
-    // NgbdModalContentComponent,
+    RenameFormComponent
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]

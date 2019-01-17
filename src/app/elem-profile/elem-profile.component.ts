@@ -4,7 +4,13 @@ import { HttpService } from '../shared/http.service';
 import { GridOptions } from 'ag-grid';
 import { ChildRuleDelElementComponent } from '../util/child-rule-del-element.component';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RenameFormComponent } from '../util/rename-form/rename-form.component';
+import { Router } from '@angular/router';
+
 import { NgForm } from '@angular/forms';
+import { environment } from '../../environments/environment';
+
 @Component({
   selector: 'app-elem-profile',
   templateUrl: './elem-profile.component.html',
@@ -16,10 +22,11 @@ export class ElemProfileComponent implements OnInit {
   public elementData: any;
   public gridElApi;
   addRulePromise;
+  renameProfilePromise;
   public getRowNodeId;
   compiledrules = '';
-  renameProfile;
   rulelist = [];
+
 
   cssData = [
     { name: 'background' },
@@ -52,8 +59,11 @@ export class ElemProfileComponent implements OnInit {
   selectedloc = undefined;
 
   public gridOptionsER: GridOptions;
-
-  constructor(private route: ActivatedRoute, private httpService: HttpService) {
+  constructor(
+    private route: ActivatedRoute,
+    private httpService: HttpService,
+    private modalService: NgbModal,
+    private router: Router) {
 
     this.gridOptionsER = <GridOptions>{
       columnDefs: [
@@ -78,7 +88,7 @@ export class ElemProfileComponent implements OnInit {
         this.routeData = params;
         console.log('routeData', this.routeData); // {order: "popular"}
 
-        this.httpService.postdata('http://localhost:8080/templater/api/get/elem', { elemid: this.routeData.elemid }).subscribe(
+        this.httpService.postdata(environment.url.server + 'templater/api/get/elem', { elemid: this.routeData.elemid }).subscribe(
           (r) => {
             console.log(r);
             // tslint:disable-next-line:triple-equals
@@ -123,7 +133,7 @@ export class ElemProfileComponent implements OnInit {
 
 
     this.addRulePromise = new Promise((resolve, reject) => {
-      this.httpService.postdata('http://localhost:8080/templater/api/set/elemrule', params).subscribe(
+      this.httpService.postdata(environment.url.server + 'templater/api/set/elemrule', params).subscribe(
         (r) => {
           console.log(r);
           // tslint:disable-next-line:triple-equals
@@ -146,24 +156,70 @@ export class ElemProfileComponent implements OnInit {
 
     });
 
-// DO MODAL OF BOOTSTRAP 
 
-    this.renameProfile = new Promise((resolve, reject) => {
-      if ('asd' == 'asd') {
-        resolve();
-
-      } else {
-        reject();
-      }
-    });
   }
+
+
+  // DO MODAL OF BOOTSTRAP 
+  // renameProfile = new Promise((resolve, reject) => {
+  renameProfile = () => {
+    console.log('here');
+    const modalRef = this.modalService.open(RenameFormComponent);
+
+    this.renameProfilePromise = new Promise((resolve, reject) => {
+      (<RenameFormComponent>modalRef.componentInstance).anyData = { elemname: this.routeData.elemname };
+
+      modalRef.result.then((result) => {
+        console.log(result);
+        if (this.routeData.elemname != result.profilename) {
+          //New name
+          let params1 = {
+            newElemName: result.profilename,
+            elemid: this.routeData.elemid,
+          };
+          this.httpService.postdata(environment.url.server + 'templater/api/set/elemname', params1).subscribe(
+            (r) => {
+              console.log(r);
+              // tslint:disable-next-line:triple-equals
+              if (r.status == true) {
+
+
+                const params = {
+                  elemid: params1.elemid,
+                  elemname: params1.newElemName
+                };
+
+                this.router.navigate(['/elem'], { queryParams: params });
+
+                resolve();
+              } else {
+                reject();
+                alert(r.msg);
+              }
+
+            });
+        } else {
+          resolve();
+        }
+      }).catch((error) => {
+        console.log(error);
+        reject();
+
+      });
+
+
+    });
+
+
+  };
+
 
   public onDeleteRule(cellData, cellid) {
     const paramsdel = {
       ruleid: cellData.rid
     };
 
-    this.httpService.postdata('http://localhost:8080/templater/api/del/elemrule', paramsdel).subscribe(
+    this.httpService.postdata(environment.url.server + 'templater/api/del/elemrule', paramsdel).subscribe(
       (r) => {
         console.log(r);
         // tslint:disable-next-line:triple-equals
@@ -184,9 +240,9 @@ export class ElemProfileComponent implements OnInit {
 
   ruleListTransform() {
 
-    const params = { elemname: JSON.parse(this.routeData.elemname), rulelist: JSON.stringify(this.rulelist) };
+    const params = { elemname: this.routeData.elemname, rulelist: JSON.stringify(this.rulelist) };
 
-    this.httpService.postdata('http://localhost:8080/templater/transform/rule', params).subscribe(
+    this.httpService.postdata(environment.url.server + 'templater/transform/rule', params).subscribe(
       (r) => {
         console.log(r);
 

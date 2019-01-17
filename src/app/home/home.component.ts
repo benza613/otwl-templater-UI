@@ -119,8 +119,8 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   public editElement(cellData, cellid) {
 
     const params = {
-      elemid: JSON.stringify(cellData.elemid),
-      elemname: JSON.stringify(cellData.elemname)
+      elemid: cellData.elemid,
+      elemname: cellData.elemname
     };
     this.router.navigate(['/elem'], { queryParams: params });
   }
@@ -174,7 +174,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
     if (x.action === 'yes') {
 
-      if (x.copyid !== undefined) {
+      if (x.copyid === undefined) {
         const paramsadd = {
           elemName: x.elemName,
           typeSelected: x.typeSelected
@@ -188,7 +188,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
               const newRow = {
                 elemid: r.elemid,
-                elemname: x.elemName,
+                elemname: r.elemName,
                 elemdate: r.elemdate
               };
 

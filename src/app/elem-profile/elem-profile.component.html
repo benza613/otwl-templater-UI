@@ -28,7 +28,7 @@
         </div>
         <div class="form-group col-md-2">
           <label for="btnprefrename">Rename Profile ?</label>
-          <button type="submit" name="btnsave" class="btn btn-info" (click)="renameProfile()">RENAME</button>
+          <button type="button" name="btnProfile" class="btn btn-info" [promiseBtn]="renameProfilePromise" (click)="renameProfile()">RENAME</button>
         </div>
       </div>
 
@@ -53,8 +53,7 @@
 
     </form>
     <ag-grid-angular style="width: 100%;" class="ag-theme-balham" [enableSorting]="true" [enableFilter]="true" id="myGridER"
-      [gridOptions]="gridOptionsER" [getRowNodeId]="getRowNodeId" [rowData]="rulelist" 
-      (gridReady)="onGridElRReady($event)">
+      [gridOptions]="gridOptionsER" [getRowNodeId]="getRowNodeId" [rowData]="rulelist" (gridReady)="onGridElRReady($event)">
     </ag-grid-angular>
   </div>
   <div class="col-xs-12 col-sm-4 col-md-4 redx">
