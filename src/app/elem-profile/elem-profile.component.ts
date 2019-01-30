@@ -9,7 +9,7 @@ import { RenameFormComponent } from '../util/rename-form/rename-form.component';
 import { Router } from '@angular/router';
 
 import { NgForm } from '@angular/forms';
-import { environment } from '../../environments/environment';
+import { environment as env } from '../../environments/environment' ;
 
 @Component({
   selector: 'app-elem-profile',
@@ -88,7 +88,7 @@ export class ElemProfileComponent implements OnInit {
         this.routeData = params;
         console.log('routeData', this.routeData); // {order: "popular"}
 
-        this.httpService.postdata(environment.url.server + 'templater/api/get/elem', { elemid: this.routeData.elemid }).subscribe(
+        this.httpService.postdata(env.url.server + 'templater/api/get/elem', { elemid: this.routeData.elemid }).subscribe(
           (r) => {
             console.log(r);
             // tslint:disable-next-line:triple-equals
@@ -133,7 +133,7 @@ export class ElemProfileComponent implements OnInit {
 
 
     this.addRulePromise = new Promise((resolve, reject) => {
-      this.httpService.postdata(environment.url.server + 'templater/api/set/elemrule', params).subscribe(
+      this.httpService.postdata(env.url.server + 'templater/api/set/elemrule', params).subscribe(
         (r) => {
           console.log(r);
           // tslint:disable-next-line:triple-equals
@@ -177,7 +177,7 @@ export class ElemProfileComponent implements OnInit {
             newElemName: result.profilename,
             elemid: this.routeData.elemid,
           };
-          this.httpService.postdata(environment.url.server + 'templater/api/set/elemname', params1).subscribe(
+          this.httpService.postdata(env.url.server + 'templater/api/set/elemname', params1).subscribe(
             (r) => {
               console.log(r);
               // tslint:disable-next-line:triple-equals
@@ -219,7 +219,7 @@ export class ElemProfileComponent implements OnInit {
       ruleid: cellData.rid
     };
 
-    this.httpService.postdata(environment.url.server + 'templater/api/del/elemrule', paramsdel).subscribe(
+    this.httpService.postdata(env.url.server + 'templater/api/del/elemrule', paramsdel).subscribe(
       (r) => {
         console.log(r);
         // tslint:disable-next-line:triple-equals
@@ -242,7 +242,7 @@ export class ElemProfileComponent implements OnInit {
 
     const params = { elemname: this.routeData.elemname, rulelist: JSON.stringify(this.rulelist) };
 
-    this.httpService.postdata(environment.url.server + 'templater/transform/rule', params).subscribe(
+    this.httpService.postdata(env.url.server + 'templater/transform/rule', params).subscribe(
       (r) => {
         console.log(r);
 

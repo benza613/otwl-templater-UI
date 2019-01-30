@@ -7,6 +7,7 @@ import { ChildCopyElementComponent } from '../util/child-copy-element.component'
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSmartModalComponent, NgxSmartModalService } from 'ngx-smart-modal';
 
+import { environment as env } from '../../environments/environment';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
@@ -131,7 +132,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       elemid: cellData.elemid
     };
 
-    this.httpService.postdata('http://localhost:8080/templater/api/del/elem', paramsdel).subscribe(
+    this.httpService.postdata(env.url.server + 'templater/api/del/elem', paramsdel).subscribe(
       (r) => {
         console.log(r);
         // tslint:disable-next-line:triple-equals
@@ -180,7 +181,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
           typeSelected: x.typeSelected
         };
 
-        this.httpService.postdata('http://localhost:8080/templater/api/set/elem', paramsadd).subscribe(
+        this.httpService.postdata(env.url.server + 'templater/api/set/elem', paramsadd).subscribe(
           (r) => {
             console.log(r);
             // tslint:disable-next-line:triple-equals
@@ -208,7 +209,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
           typeSelected: x.typeSelected
         };
 
-        this.httpService.postdata('http://localhost:8080/templater/api/copy/elem', paramscopy).subscribe(
+        this.httpService.postdata(env.url.server + 'templater/api/copy/elem', paramscopy).subscribe(
           (r) => {
             console.log(r);
             // tslint:disable-next-line:triple-equals
